@@ -6,7 +6,7 @@ import openai
 app = Flask(__name__)
 
 # Set the OpenAI API key. This is needed to make a call to the OpenAI API.
-openai.api_key = "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"
+openai.api_key = "put your api key here"
 
 # Define the route for the home page. This tells Flask what to display at the main URL of the web app.
 @app.route("/")
