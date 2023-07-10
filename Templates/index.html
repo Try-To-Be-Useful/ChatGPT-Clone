@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenAI GPT Chat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 65%; 
+            margin: auto;
+            margin-top: 2em;
+            border-radius: 15px;
+            padding: 2em;
+            background-color: #222;
+        }
+
+        .panel-body {
+            height: 40vh; 
+            overflow-y: auto;
+            margin-bottom: 1em;
+            background-color: #333;
+            border-radius: 15px;
+            padding: 1em;
+            color: #ddd;
+        }
+
+        .btn-default {
+            background-color: #6c757d;
+            color: #f8f9fa;
+        }
+
+        .conversation-box {
+            background-color: #444;
+            margin: 1em 0;
+            padding: 1em;
+            border-radius: 15px;
+        }
+
+        .conversation-box b {
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ChatGPT Clone</h2>
+        <hr>
+
+        <!-- This is the container for the chat messages. -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Chat Messages</div>
+            
+            <!-- The 'chat' div will contain all chat messages. Initially it's empty. -->
+            <div class="panel-body" id="chat">
+            </div>
+        </div>
+
+        <!-- This is the input field for users to type their message. -->
+        <div class="input-group">
+            <!-- The user input will be captured from this text field. -->
+            <input type="text" id="userInput" class="form-control">
+            <!-- This button triggers the chat when clicked. -->
+            <span class="input-group-btn">
+                <button class="btn btn-default" id="submit">Submit</button>
+            </span>
+        </div>
+    </div>
+
+    <!-- jQuery library imported from a CDN. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // When the 'submit' button is clicked, this function will run.
+        $("#submit").click(function(){
+            // Get the user's input from the text field.
+            var userInput = $("#userInput").val();
+
+            // Send a GET request to the "/get" route of our server with the user's input as a query parameter.
+            $.get("/get?msg=" + userInput, function(data){
+                // The server will respond with the bot's reply. We'll append this and the user's message to the chat div.
+
+                // First, we construct the HTML to be added.
+                var conversation = "<div class='conversation-box'>";
+                conversation += "<p><b>You:</b> " + userInput + "</p>";
+                conversation += "<p><b>OpenAI:</b> " + data + "</p>";
+                conversation += "</div>";
+
+                // Then, we append this HTML to the chat div.
+                $("#chat").append(conversation);
+            });
+        });
+    </script>
+</body>
+</html>
